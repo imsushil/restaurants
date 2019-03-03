@@ -1,0 +1,31 @@
+.card .card-subtitle.cuisine {
+    font-size: 0.75rem;
+}
+.car .card-subtitle.city {
+    font-size: 0.85rem;
+}
+
+.card .card-img-top {
+    height: 180px;
+}
+
+.card .rating {
+    color: #ffc000;
+}
+
+textarea:focus, 
+textarea.form-control:focus, 
+input.form-control:focus, 
+input[type=text]:focus, 
+input[type=password]:focus, 
+input[type=email]:focus, 
+input[type=number]:focus, 
+[type=text].form-control:focus, 
+[type=password].form-control:focus, 
+[type=email].form-control:focus, 
+[type=tel].form-control:focus, 
+[contenteditable].form-control:focus,
+.btn:focus, .btn:active {
+  box-shadow: none;
+  outline: none;
+}

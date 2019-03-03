@@ -1,16 +1,24 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import {HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import {FilterByNamePipe} from './filters/FilterByName'
 
 import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    FilterByNamePipe
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpClientModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [
+    FilterByNamePipe
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
