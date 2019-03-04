@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
         var restaurant: Restaurant = this.setRestaurant(el);
         this.restaurants.push(restaurant);
       });
-      this.restaurants = this.restaurants.splice(0,20);
+      this.restaurants = this.restaurants.splice(0,100);
       console.log(this.restaurants);
     }, error => {
       console.log(error);
