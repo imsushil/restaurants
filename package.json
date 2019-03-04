@@ -33,11 +33,12 @@
     "font-awesome": "^4.7.0",
     "i": "^0.3.6",
     "jquery": "^3.3.1",
+    "ngx-spinner": "^7.0.0",
     "path": "^0.12.7",
     "rxjs": "~6.3.3",
     "save": "^2.3.3",
-    "zone.js": "~0.8.26",
-    "typescript": "~3.1.1"
+    "typescript": "~3.1.1",
+    "zone.js": "~0.8.26"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.10.0",

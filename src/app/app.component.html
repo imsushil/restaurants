@@ -18,30 +18,37 @@
 </nav>
 <br>
 <div class="container">
-  <div class="input-group mb-3">
-    <input type="text" class="form-control" [(ngModel)]="restaurantName" placeholder="Search restaurants" aria-label="restaurant name" aria-describedby="basic-addon2">
-    <div class="input-group-append">
-      <button class="btn btn-outline-secondary" type="button">Search</button>
-    </div>
+  <div [hidden]="dataFetched">
+      <ngx-spinner bdOpacity = "0.9"  bdColor = "#ffffff" size = "medium" color = "#000000" type = "ball-circus" fullScreen = "false">
+          <p class="loadingText">Loading...</p>
+      </ngx-spinner>
   </div>
-  <div class="card-columns row">
-    <div *ngFor="let restaurant of (restaurants | filterByName:restaurantName)" class="col-4">
-      <div class="card card-box">
-        <img class="card-img-top" src="{{restaurant.imgUrl}}" alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title">{{restaurant.name}}
-            <span><i class="fa fa-star rating"></i>{{"(" + restaurant.rating + ")"}}</span>
-          </h5>
-          <h6 class="card-subtitle mb-2 text-muted cuisine">{{restaurant.cuisine}}</h6>
-          <h6 class="card-subtitle mb-2 text-muted city">{{restaurant.city}}</h6>
-          <p class="card-text"></p>
-          
-        </div>
-        <div class="card-footer text-right">
-            <button type="button" class="btn btn-sm btn-primary">More...</button>
+  <div *ngIf="dataFetched">
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" [(ngModel)]="restaurantName" placeholder="Search restaurants" aria-label="restaurant name" aria-describedby="basic-addon2">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="button">Search</button>
         </div>
       </div>
-    </div>
+      <div class="card-columns row">
+        <div *ngFor="let restaurant of (restaurants | filterByName:restaurantName)" class="col-4">
+          <div class="card card-box">
+            <img class="card-img-top" src="{{restaurant.imgUrl}}" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title">{{restaurant.name}}
+                <span><i class="fa fa-star rating"></i>{{"(" + restaurant.rating + ")"}}</span>
+              </h5>
+              <h6 class="card-subtitle mb-2 text-muted cuisine">{{restaurant.cuisine}}</h6>
+              <h6 class="card-subtitle mb-2 text-muted city">{{restaurant.city}}</h6>
+              <p class="card-text"></p>
+              
+            </div>
+            <div class="card-footer text-right">
+                <button type="button" class="btn btn-sm btn-primary">More...</button>
+            </div>
+          </div>
+        </div>
+      </div>
   </div>
     
 </div>

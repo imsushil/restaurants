@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {RestaurantService} from './service/restaurant.service'
 import * as csv2json from 'csvjson-csv2json'
 import { Restaurant } from './modal/Restaurant';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-root',
@@ -12,17 +13,23 @@ export class AppComponent implements OnInit {
   title = 'restaurants';
   restaurants: Array<Restaurant>;
   restaurantName: String = '';
+  dataFetched: boolean = false;
+
+  constructor(private restaurantService: RestaurantService, private spinner: NgxSpinnerService) {
+    this.restaurants = new Array();
+  }
 
   ngOnInit() {
     this.getRestaurants();
   }
 
-  constructor(private restaurantService: RestaurantService) {
-    this.restaurants = new Array();
-  }
+  
 
   private getRestaurants(): void {
+    this.spinner.show();
+    this.dataFetched = false;
     this.restaurantService.getRestaurants().subscribe(data => {
+      this.dataFetched = true;
       var json = csv2json(data, {parseNumbers: true});
       
       json.forEach(el => {
@@ -30,9 +37,11 @@ export class AppComponent implements OnInit {
         this.restaurants.push(restaurant);
       });
       this.restaurants = this.restaurants.splice(0,100);
-      console.log(this.restaurants);
+      this.spinner.hide();
     }, error => {
       console.log(error);
+      this.spinner.hide();
+      this.dataFetched = true;
     });
   }
 

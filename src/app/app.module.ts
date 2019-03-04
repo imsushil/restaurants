@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import {HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import {FilterByNamePipe} from './filters/FilterByName'
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 import { AppComponent } from './app.component';
 
@@ -14,7 +15,8 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgxSpinnerModule
   ],
   providers: [
     FilterByNamePipe
