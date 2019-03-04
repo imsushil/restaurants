@@ -11,7 +11,7 @@ import { Restaurant } from './modal/Restaurant';
 export class AppComponent implements OnInit {
   title = 'restaurants';
   restaurants: Array<Restaurant>;
-  //restaurantName: String = '';
+  restaurantName: String = '';
 
   ngOnInit() {
     this.getRestaurants();
