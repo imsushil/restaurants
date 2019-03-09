@@ -1,3 +1,6 @@
+html, body {
+    height: 100%;
+}
 .card .card-subtitle.cuisine {
     font-size: 0.75rem;
 }
@@ -19,7 +22,8 @@ input.form-control:focus,
 input[type=text]:focus, 
 input[type=password]:focus, 
 input[type=email]:focus, 
-input[type=number]:focus, 
+input[type=number]:focus,
+select:focus, 
 [type=text].form-control:focus, 
 [type=password].form-control:focus, 
 [type=email].form-control:focus, 
@@ -33,4 +37,8 @@ input[type=number]:focus,
 .loadingText {
     font-size: 20px;
     color: #000000;
+}
+
+.pagination /deep/ .ngx-pagination .current {
+    background-color: #343a40;
 }

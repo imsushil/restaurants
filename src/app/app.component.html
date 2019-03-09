@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">[R]estaurants</a>
+  <a class="navbar-brand" href="#">[Rest]aurants</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -8,30 +8,76 @@
       <li class="nav-item active">
         <a class="nav-link" href="#">Home</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">About</a>
-      </li>
     </ul>
     <span class="navbar-text">
     </span>
   </div>
 </nav>
-<br>
-<div class="container">
+<div class="container-fluid bg-light">
   <div [hidden]="dataFetched">
       <ngx-spinner bdOpacity = "0.9"  bdColor = "#ffffff" size = "medium" color = "#000000" type = "ball-circus" fullScreen = "false">
           <p class="loadingText">Loading...</p>
       </ngx-spinner>
   </div>
   <div *ngIf="dataFetched">
-      <div class="input-group mb-3">
-        <input type="text" class="form-control" [(ngModel)]="restaurantName" placeholder="Search restaurants" aria-label="restaurant name" aria-describedby="basic-addon2">
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button">Search</button>
+    <div class="row">
+      <!-- Filter section -->
+      <div class="col-md-3 h-100 shadow-sm m-2 bg-white">
+        <div class="row">
+          <div class="col">
+              <h5>Filters</h5>
+          </div>
+          <div class="col text-right">
+              <button type="button" class="btn btn-link btn-sm" (click)="clearFilters()">CLEAR ALL</button>
+          </div>
         </div>
+        <hr>
+        <h6>Cuisine</h6>
+        <input type="text" class="form-control" name="cuisineName" placeholder="Search cuisine" [(ngModel)]="cuisineName" />
+        <div class="mt-2" style="height: 300px; overflow-y: scroll">
+          <div *ngFor="let cuisine of (cuisineList | searchCuisine:cuisineName)" class="form-check">
+            <input class="form-check-input" type="checkbox" [(ngModel)]="cuisine.checked">
+            <label class="form-check-label">
+              {{cuisine.name}}
+            </label>
+          </div>
+        </div>
+        <br>
       </div>
+
+    <!-- Main -->
+      <div class="col shadow-sm m-2 bg-white">
+        <form>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="">Search Restaurant</label>
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" name="restaurantName" [(ngModel)]="restaurantName" placeholder="Restaurant name" aria-label="restaurant name" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" type="button"><i class="fa fa-search"></i></button>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-3">
+              <label>Sort by </label>&nbsp;
+              <select class="custom-select" name="rating" [(ngModel)]="userRating">
+                <option value="" selected>--Please select--</option>
+                <option value="rating">user rating</option>
+              </select>
+            </div>
+            <div class="form-group col-md-3">
+              <label>Items per page</label>&nbsp;
+              <select class="custom-select" name="itemsPerPage" [(ngModel)]="itemsPerPage">
+                <option value="25" selected>25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+            </div>
+          </div>
+        </form>
+      
       <div class="card-columns row">
-        <div *ngFor="let restaurant of (restaurants | filterByName:restaurantName)" class="col-4">
+        <div *ngFor="let restaurant of (restaurants | filterByName:restaurantName | filterByCuisine:getSelectedCuisines() | orderBy:{property: userRating, direction: -1} | paginate: { itemsPerPage: itemsPerPage, currentPage: p })" class="col-4">
           <div class="card card-box">
             <img class="card-img-top" src="{{restaurant.imgUrl}}" alt="Card image cap">
             <div class="card-body">
@@ -49,6 +95,11 @@
           </div>
         </div>
       </div>
+      <div class="row justify-content-center pagination">
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </div>
+    </div>
+    </div>
   </div>
     
 </div>
