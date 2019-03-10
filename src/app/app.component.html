@@ -19,10 +19,42 @@
           <p class="loadingText">Loading...</p>
       </ngx-spinner>
   </div>
+  <div id="filter-overlay">
+    <div class="text-right m-2">
+      <i class="fa fa-times" (click)="hideFilters()"></i>
+    </div>
+    <div class="container-fluid">
+      <div class="row">
+          <div class="col">
+              <h5>Filters</h5>
+          </div>
+          <div class="col text-right">
+              <button type="button" class="btn btn-link btn-sm" (click)="clearFilters()">CLEAR ALL</button>
+          </div>
+        </div>
+        <hr>
+        <h6>Cuisine</h6>
+        <input type="text" class="form-control" name="cuisineName" placeholder="Search cuisine" [(ngModel)]="cuisineName" />
+        <div class="mt-2" style="height: 300px; overflow-y: scroll">
+          <div *ngFor="let cuisine of (cuisineList | searchCuisine:cuisineName)" class="form-check">
+            <input class="form-check-input" type="checkbox" [(ngModel)]="cuisine.checked">
+            <label class="form-check-label">
+              {{cuisine.name}}
+            </label>
+          </div>
+        </div>
+    </div>
+    <div class="text-center m-2">
+      <button class="btn btn-primary btn-sm" (click)="hideFilters()">Apply</button>
+    </div>
+  </div>
   <div *ngIf="dataFetched">
     <div class="row">
       <!-- Filter section -->
-      <div class="col-md-3 h-100 shadow-sm m-2 bg-white">
+      <div class="col-12 text-right d-xs-block d-md-none mt-2">
+        <button class="btn btn-primary btn-sm rounded-circle" (click)="showFilters()"><i class="fa fa-filter"></i></button>
+      </div>
+      <div class="d-none d-md-block col-md-3 h-100 shadow-sm m-2 bg-white">
         <div class="row">
           <div class="col">
               <h5>Filters</h5>
@@ -49,7 +81,7 @@
       <div class="col shadow-sm m-2 bg-white">
         <form>
           <div class="form-row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-sm-6 col-md-6">
               <label for="">Search Restaurant</label>
               <div class="input-group mb-3">
                 <input type="text" class="form-control" name="restaurantName" [(ngModel)]="restaurantName" placeholder="Restaurant name" aria-label="restaurant name" aria-describedby="basic-addon2">
@@ -58,14 +90,14 @@
                 </div>
               </div>
             </div>
-            <div class="form-group col-md-3">
+            <div class="form-group col-sm-3 col-md-3">
               <label>Sort by </label>&nbsp;
               <select class="custom-select" name="rating" [(ngModel)]="userRating">
                 <option value="" selected>--Please select--</option>
                 <option value="rating">user rating</option>
               </select>
             </div>
-            <div class="form-group col-md-3">
+            <div class="form-group col-sm-3 col-md-3">
               <label>Items per page</label>&nbsp;
               <select class="custom-select" name="itemsPerPage" [(ngModel)]="itemsPerPage">
                 <option value="25" selected>25</option>
@@ -77,7 +109,7 @@
         </form>
       
       <div class="card-columns row">
-        <div *ngFor="let restaurant of (restaurants | filterByName:restaurantName | filterByCuisine:getSelectedCuisines() | orderBy:{property: userRating, direction: -1} | paginate: { itemsPerPage: itemsPerPage, currentPage: p })" class="col-4">
+        <div class="col-12 col-sm-6 col-md-6 col-lg-4" *ngFor="let restaurant of (restaurants | filterByName:restaurantName | filterByCuisine:getSelectedCuisines() | orderBy:{property: userRating, direction: -1} | paginate: { itemsPerPage: itemsPerPage, currentPage: p })">
           <div class="card card-box">
             <img class="card-img-top" src="{{restaurant.imgUrl}}" alt="Card image cap">
             <div class="card-body">

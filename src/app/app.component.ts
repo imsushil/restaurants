@@ -3,6 +3,7 @@ import {RestaurantService} from './service/restaurant.service'
 import * as csv2json from 'csvjson-csv2json'
 import { Restaurant } from './modal/Restaurant';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { $ } from 'protractor';
 
 @Component({
   selector: 'app-root',
@@ -96,5 +97,13 @@ export class AppComponent implements OnInit {
     this.cuisineList.forEach((item) => {
         item.checked = false
     });
+  }
+
+  private showFilters(): void{
+    document.getElementById("filter-overlay").style.display="block";
+  }
+
+  private hideFilters(): void {
+    document.getElementById("filter-overlay").style.display="none";
   }
 }
