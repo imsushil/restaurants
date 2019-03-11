@@ -92,18 +92,18 @@ export class AppComponent implements OnInit {
   }
 
   /* Clear all filters */
-  private clearFilters(): void {
+  public clearFilters(): void {
     // clear filter on cuisine
     this.cuisineList.forEach((item) => {
         item.checked = false
     });
   }
 
-  private showFilters(): void{
+  public showFilters(): void{
     document.getElementById("filter-overlay").style.display="block";
   }
 
-  private hideFilters(): void {
+  public hideFilters(): void {
     document.getElementById("filter-overlay").style.display="none";
   }
 }
