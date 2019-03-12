@@ -65,7 +65,7 @@
         </div>
         <hr>
         <h6>Cuisine</h6>
-        <input type="text" class="form-control" name="cuisineName" placeholder="Search cuisine" [(ngModel)]="cuisineName" />
+        <input type="text" class="form-control form-control-sm" name="cuisineName" placeholder="Search cuisine" [(ngModel)]="cuisineName" />
         <div class="mt-2" style="height: 300px; overflow-y: scroll">
           <div *ngFor="let cuisine of (cuisineList | searchCuisine:cuisineName)" class="form-check">
             <input class="form-check-input" type="checkbox" [(ngModel)]="cuisine.checked">
@@ -82,24 +82,24 @@
         <form>
           <div class="form-row">
             <div class="form-group col-6 col-sm-6 col-md-6">
-              <label for="">Search Restaurant</label>
+              <label class="col-form-label col-form-label-sm font-weight-bold">Search Restaurant</label>
               <div class="input-group mb-3">
-                <input type="text" class="form-control" name="restaurantName" [(ngModel)]="restaurantName" placeholder="Restaurant name" aria-label="restaurant name" aria-describedby="basic-addon2">
+                <input type="text" class="form-control form-control-sm" name="restaurantName" [(ngModel)]="restaurantName" placeholder="Restaurant name" aria-label="restaurant name" aria-describedby="basic-addon2">
                 <div class="input-group-append">
-                  <button class="btn btn-outline-secondary" type="button"><i class="fa fa-search"></i></button>
+                  <button class="btn btn-outline-secondary btn-sm" type="button"><i class="fa fa-search"></i></button>
                 </div>
               </div>
             </div>
             <div class="form-group col-4 col-sm-3 col-md-3">
-              <label>Sort by </label>
-              <select class="custom-select" name="rating" [(ngModel)]="userRating">
+              <label class="col-form-label col-form-label-sm font-weight-bold">Sort by </label>
+              <select class="form-control form-control-sm" name="rating" [(ngModel)]="userRating">
                 <option value="" selected>--Please select--</option>
                 <option value="rating">user rating</option>
               </select>
             </div>
             <div class="form-group col-2 col-sm-3 col-md-3">
-              <label>Items/page</label>
-              <select class="custom-select" name="itemsPerPage" [(ngModel)]="itemsPerPage">
+              <label class="col-form-label col-form-label-sm font-weight-bold">Items/page</label>
+              <select class="form-control form-control-sm" name="itemsPerPage" [(ngModel)]="itemsPerPage">
                 <option value="25" selected>25</option>
                 <option value="50">50</option>
                 <option value="100">100</option>
