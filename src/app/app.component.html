@@ -81,7 +81,7 @@
       <div class="col shadow-sm m-2 bg-white">
         <form>
           <div class="form-row">
-            <div class="form-group col-sm-6 col-md-6">
+            <div class="form-group col-6 col-sm-6 col-md-6">
               <label for="">Search Restaurant</label>
               <div class="input-group mb-3">
                 <input type="text" class="form-control" name="restaurantName" [(ngModel)]="restaurantName" placeholder="Restaurant name" aria-label="restaurant name" aria-describedby="basic-addon2">
@@ -90,15 +90,15 @@
                 </div>
               </div>
             </div>
-            <div class="form-group col-sm-3 col-md-3">
-              <label>Sort by </label>&nbsp;
+            <div class="form-group col-4 col-sm-3 col-md-3">
+              <label>Sort by </label>
               <select class="custom-select" name="rating" [(ngModel)]="userRating">
                 <option value="" selected>--Please select--</option>
                 <option value="rating">user rating</option>
               </select>
             </div>
-            <div class="form-group col-sm-3 col-md-3">
-              <label>Items per page</label>&nbsp;
+            <div class="form-group col-2 col-sm-3 col-md-3">
+              <label>Items/page</label>
               <select class="custom-select" name="itemsPerPage" [(ngModel)]="itemsPerPage">
                 <option value="25" selected>25</option>
                 <option value="50">50</option>
