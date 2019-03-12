@@ -39,6 +39,10 @@ select:focus,
     color: #000000;
 }
 
+.pagination /deep/ .ngx-pagination {
+    padding: 0;
+    font-size: 0.85rem;
+}
 .pagination /deep/ .ngx-pagination .current {
     background-color: #343a40;
 }
