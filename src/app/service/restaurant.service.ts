@@ -7,7 +7,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class RestaurantService {
-  private base_url = 'http://localhost:8081/restaurants?';
+  /* local mongoDB connection*/
+  // private base_url = 'http://localhost:8081/restaurants?';
+  /* Prod mongoDB connection */
+  private base_url = "https://restaurants-apis.herokuapp.com/restaurants?";
   httpOptions = {
     headers: new HttpHeaders({
       'Access-Control-Allow-Origin': '*'
