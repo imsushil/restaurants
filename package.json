@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "engines": {
     "node": "12.9.1",
-    "npm": "5.5.1"
+    "npm": "6.11.3"
   },
   "scripts": {
     "ng": "ng",
