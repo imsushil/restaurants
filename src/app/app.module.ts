@@ -13,6 +13,7 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 
 import { AppComponent } from './app.component';
+import { HeaderComponent } from './core/header/header.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { AppComponent } from './app.component';
     FilterByNamePipe,
     OrderByPipe,
     SearchInCuisinePipe,
-    FilterByCuisinePipe
+    FilterByCuisinePipe,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

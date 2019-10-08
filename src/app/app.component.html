@@ -1,18 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">[Rest]aurants</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarText">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home</a>
-      </li>
-    </ul>
-    <span class="navbar-text">
-    </span>
-  </div>
-</nav>
+<header></header>
 <div class="container-fluid bg-light">
   <div [hidden]="dataFetched">
       <ngx-spinner bdOpacity = "0.9"  bdColor = "#ffffff" size = "medium" color = "#000000" type = "ball-circus" fullScreen = "false">
@@ -45,7 +31,7 @@
         </div>
     </div>
     <div class="text-center m-2">
-      <button class="btn btn-primary btn-sm" (click)="hideFilters()">Apply</button>
+      <button class="btn btn-primary btn-sm" (click)="applyFilters()">Apply</button>
     </div>
   </div>
   <div *ngIf="dataFetched">
@@ -68,13 +54,12 @@
         <input type="text" class="form-control form-control-sm" name="cuisineName" placeholder="Search cuisine" [(ngModel)]="cuisineName" />
         <div class="mt-2" style="height: 300px; overflow-y: scroll">
           <div *ngFor="let cuisine of (cuisineList | searchCuisine:cuisineName)" class="form-check">
-            <input class="form-check-input" type="checkbox" [(ngModel)]="cuisine.checked">
+            <input class="form-check-input" type="checkbox" [(ngModel)]="cuisine.checked" (change)="getRestaurantsByNameAndCuisines()">
             <label class="form-check-label">
               {{cuisine.name}}
             </label>
           </div>
         </div>
-        <br>
       </div>
 
     <!-- Main -->
@@ -84,22 +69,23 @@
             <div class="form-group col-6 col-sm-6 col-md-6">
               <label class="col-form-label col-form-label-sm font-weight-bold">Search Restaurant</label>
               <div class="input-group mb-3">
-                <input type="text" class="form-control form-control-sm" name="restaurantName" [(ngModel)]="restaurantName" placeholder="Restaurant name" aria-label="restaurant name" aria-describedby="basic-addon2">
+                <input type="text" class="form-control form-control-sm" name="restaurantName" [(ngModel)]="restaurantName" (input)="getRestaurantsByNameAndCuisines()" placeholder="Restaurant name" aria-label="restaurant name" aria-describedby="basic-addon2">
                 <div class="input-group-append">
-                  <button class="btn btn-outline-secondary btn-sm" type="button"><i class="fa fa-search"></i></button>
+                  <button class="btn btn-outline-secondary btn-sm search-btn" type="button"><i class="fa fa-search"></i></button>
                 </div>
               </div>
             </div>
             <div class="form-group col-4 col-sm-3 col-md-3">
               <label class="col-form-label col-form-label-sm font-weight-bold">Sort by </label>
-              <select class="form-control form-control-sm" name="rating" [(ngModel)]="userRating">
-                <option value="" selected>--Please select--</option>
-                <option value="rating">user rating</option>
+              <select class="form-control form-control-sm" name="rating" [(ngModel)]="sortProperty" (change)="getRestaurantsByNameAndCuisines()">
+                <option value="">--Please select--</option>
+                <option value="name" selected>name</option>
+                <option value="rating,desc">user rating</option>
               </select>
             </div>
             <div class="form-group col-2 col-sm-3 col-md-3">
               <label class="col-form-label col-form-label-sm font-weight-bold">Items/page</label>
-              <select class="form-control form-control-sm" name="itemsPerPage" [(ngModel)]="itemsPerPage">
+              <select class="form-control form-control-sm" name="itemsPerPage" [(ngModel)]="itemsPerPage" (change)="getRestaurants()">
                 <option value="25" selected>25</option>
                 <option value="50">50</option>
                 <option value="100">100</option>
@@ -107,31 +93,33 @@
             </div>
           </div>
         </form>
-      
+
       <div class="card-columns row">
-        <div class="col-12 col-sm-6 col-md-6 col-lg-4" *ngFor="let restaurant of (restaurants | filterByName:restaurantName | filterByCuisine:getSelectedCuisines() | orderBy:{property: userRating, direction: -1} | paginate: { itemsPerPage: itemsPerPage, currentPage: p })">
+        <div class="col-12 col-sm-6 col-md-6 col-lg-4" *ngFor="let restaurant of restaurants">
           <div class="card card-box">
-            <img class="card-img-top" src="{{restaurant.imgUrl}}" alt="Card image cap">
+            <img class="card-img-top" src="{{restaurant.getImgUrl()}}" alt="Card image cap">
             <div class="card-body">
-              <h5 class="card-title">{{restaurant.name}}
-                <span><i class="fa fa-star rating"></i>{{"(" + restaurant.rating + ")"}}</span>
+              <h5 class="card-title">{{restaurant.getName()}}
+                <span *ngIf="restaurant.getRating()"><i class="fa fa-star rating"></i>{{"(" + restaurant.getRating() + ")"}}</span>
               </h5>
-              <h6 class="card-subtitle mb-2 text-muted cuisine">{{restaurant.cuisine}}</h6>
-              <h6 class="card-subtitle mb-2 text-muted city">{{restaurant.city}}</h6>
+              <h6 class="card-subtitle mb-2 text-muted cuisine">{{restaurant.getCuisine()}}</h6>
+              <h6 class="card-subtitle mb-2 text-muted city">{{restaurant.getCity()}}</h6>
               <p class="card-text"></p>
-              
-            </div>
-            <div class="card-footer text-right">
-                <button type="button" class="btn btn-sm btn-primary">More...</button>
             </div>
           </div>
         </div>
       </div>
-      <div class="row justify-content-center pagination">
-          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      <div class="row justify-content-center align-items-center pagination">
+        <div class="item">
+          <button class="btn btn-sm button-primary" (click)="prev()" [ngClass]="{'disabled': page==0}">Prev</button>
+        </div>
+        <div class="item">{{page+1}}/{{totalPages}}</div>
+        <div class="item">
+          <button class="btn btn-sm button-primary" (click)="next()" [ngClass]="{'disabled': page==totalPages-1}">Next</button>
+        </div>
       </div>
     </div>
     </div>
   </div>
-    
+
 </div>

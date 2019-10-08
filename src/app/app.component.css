@@ -16,18 +16,18 @@ html, body {
     color: #ffc000;
 }
 
-textarea:focus, 
-textarea.form-control:focus, 
-input.form-control:focus, 
-input[type=text]:focus, 
-input[type=password]:focus, 
-input[type=email]:focus, 
+textarea:focus,
+textarea.form-control:focus,
+input.form-control:focus,
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=email]:focus,
 input[type=number]:focus,
-select:focus, 
-[type=text].form-control:focus, 
-[type=password].form-control:focus, 
-[type=email].form-control:focus, 
-[type=tel].form-control:focus, 
+select:focus,
+[type=text].form-control:focus,
+[type=password].form-control:focus,
+[type=email].form-control:focus,
+[type=tel].form-control:focus,
 [contenteditable].form-control:focus,
 .btn:focus, .btn:active {
   box-shadow: none;
@@ -39,12 +39,41 @@ select:focus,
     color: #000000;
 }
 
-.pagination /deep/ .ngx-pagination {
+.pagination {
     padding: 0;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
 }
-.pagination /deep/ .ngx-pagination .current {
-    background-color: #343a40;
+.pagination .item:first-child {
+  padding-right: 5px;
+}
+.pagination .item button {
+  /* background-color: #fafafa;
+  border-color: #ccc; */
+  /* background-color: #d84f57; */
+  background-color: #fafafa;
+  color: #d84f57;
+  border-color: #d84f57;
+  box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.16);
+  padding: 2px 5px;
+  font-size: 0.8rem;
+}
+button.btn.search-btn:hover {
+  background-color: #d84f57;
+  border-color: #d84f57;
+}
+.pagination .item button.disabled {
+  cursor: default;
+  box-shadow: none;
+}
+.pagination .item button.disabled:hover {
+  background-color: #fafafa;
+}
+.pagination .item button:hover {
+  background-color: #f1f1f1;
+}
+.pagination .item:last-child {
+  padding-left: 5px;
 }
 
 #filter-overlay {
@@ -59,7 +88,7 @@ select:focus,
     background-color: #fff;
     z-index: 1000;
 }
-#filter-overlay i.fa.fa-times { 
+#filter-overlay i.fa.fa-times {
     font-size: 1.2em;
 }
 #filter-overlay i.fa.fa-times:hover {
