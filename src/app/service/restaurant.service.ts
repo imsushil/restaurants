@@ -1,16 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class RestaurantService {
-  /* local mongoDB connection*/
-  // private base_url = 'http://localhost:8081/restaurants?';
-  /* Prod mongoDB connection */
-  private base_url = "https://restaurants-apis.herokuapp.com/restaurants?";
+  private base_url = environment.apiUrl;
   httpOptions = {
     headers: new HttpHeaders({
       'Access-Control-Allow-Origin': '*'
