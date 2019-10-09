@@ -1,9 +1,11 @@
 <header></header>
 <div class="container-fluid bg-light">
-  <div [hidden]="dataFetched">
-      <ngx-spinner bdOpacity = "0.9"  bdColor = "#ffffff" size = "medium" color = "#000000" type = "ball-circus" fullScreen = "false">
-          <p class="loadingText">Loading...</p>
-      </ngx-spinner>
+  <div class="spinner" [hidden]="dataFetched">
+    <div class="d-flex justify-content-center align-items-center h-100">
+      <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
   </div>
   <div id="filter-overlay">
     <div class="text-right m-2">
@@ -34,7 +36,7 @@
       <button class="btn btn-primary btn-sm" (click)="applyFilters()">Apply</button>
     </div>
   </div>
-  <div *ngIf="dataFetched">
+  <div>
     <div class="row">
       <!-- Filter section -->
       <div class="col-12 text-right d-xs-block d-md-none mt-2">
@@ -54,7 +56,7 @@
         <input type="text" class="form-control form-control-sm" name="cuisineName" placeholder="Search cuisine" [(ngModel)]="cuisineName" />
         <div class="mt-2" style="height: 300px; overflow-y: scroll">
           <div *ngFor="let cuisine of (cuisineList | searchCuisine:cuisineName)" class="form-check">
-            <input class="form-check-input" type="checkbox" [(ngModel)]="cuisine.checked" (change)="getRestaurantsByNameAndCuisines()">
+            <input class="form-check-input" type="checkbox" [(ngModel)]="cuisine.checked" (change)="getRestaurants()">
             <label class="form-check-label">
               {{cuisine.name}}
             </label>
@@ -69,15 +71,15 @@
             <div class="form-group col-6 col-sm-6 col-md-6">
               <label class="col-form-label col-form-label-sm font-weight-bold">Search Restaurant</label>
               <div class="input-group mb-3">
-                <input type="text" class="form-control form-control-sm" name="restaurantName" [(ngModel)]="restaurantName" (input)="getRestaurantsByNameAndCuisines()" placeholder="Restaurant name" aria-label="restaurant name" aria-describedby="basic-addon2">
+                <input type="text" class="form-control form-control-sm" name="restaurantName" [(ngModel)]="restaurantName" (keydown)="storeSearchedName()" (keyup)="searchRestaurants($event)" placeholder="Restaurant name" aria-label="restaurant name" aria-describedby="basic-addon2">
                 <div class="input-group-append">
-                  <button class="btn btn-outline-secondary btn-sm search-btn" type="button"><i class="fa fa-search"></i></button>
+                  <button class="btn btn-outline-secondary btn-sm search-btn" type="button" (click)="getRestaurants()" [disabled]="restaurantName.length==0"><i class="fa fa-search"></i></button>
                 </div>
               </div>
             </div>
             <div class="form-group col-4 col-sm-3 col-md-3">
               <label class="col-form-label col-form-label-sm font-weight-bold">Sort by </label>
-              <select class="form-control form-control-sm" name="rating" [(ngModel)]="sortProperty" (change)="getRestaurantsByNameAndCuisines()">
+              <select class="form-control form-control-sm" name="rating" [(ngModel)]="sortProperty" (change)="getRestaurants()">
                 <option value="">--Please select--</option>
                 <option value="name" selected>name</option>
                 <option value="rating,desc">user rating</option>
@@ -93,7 +95,10 @@
             </div>
           </div>
         </form>
-
+        <div class="row flex-column no-results" *ngIf="dataFetched && restaurants.length==0">
+            <i class="fa fa-search fa-lg"></i>
+            No matching restaurants found.
+        </div>
       <div class="card-columns row">
         <div class="col-12 col-sm-6 col-md-6 col-lg-4" *ngFor="let restaurant of restaurants">
           <div class="card card-box">
@@ -109,7 +114,7 @@
           </div>
         </div>
       </div>
-      <div class="row justify-content-center align-items-center pagination">
+      <div class="row justify-content-center align-items-center pagination" *ngIf="restaurants.length>0">
         <div class="item">
           <button class="btn btn-sm button-primary" (click)="prev()" [ngClass]="{'disabled': page==0}">Prev</button>
         </div>

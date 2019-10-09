@@ -20,27 +20,34 @@ export class AppComponent implements OnInit {
   sortProperty = 'name';
   cuisineSet: Set<String>;
   cuisineList: Array<any>;
+  filters: any;
+  nameBeforePressingBack = '';
 
-  constructor(private restaurantService: RestaurantService, private spinner: NgxSpinnerService) {
+  constructor(private restaurantService: RestaurantService) {
     this.restaurants = new Array();
     this.cuisineList = new Array();
     this.cuisineSet = new Set();
+    this.initFilters();
   }
 
   ngOnInit() {
     this.getRestaurants();
   }
 
+  initFilters() {
+    this.filters = {};
+    this.filters.name = this.restaurantName;
+    this.filters.cuisinesList = this.getSelectedCuisines();
+  }
   private getRestaurants(): void {
-    this.spinner.show();
     this.dataFetched = false;
     /*
       Fetching restaurant data (csv file) from the restaurantService class
      */
-    this.restaurantService.getRestaurants(this.page, this.itemsPerPage, this.sortProperty).subscribe(data => {
+    this.initFilters();
+    this.restaurantService.getRestaurants(this.filters, this.page, this.itemsPerPage, this.sortProperty).subscribe(data => {
       this.dataFetched = true;
       const restaurantsList = data.content;
-      console.log(data);
       this.totalPages = data.totalPages;
       this.restaurants = [];
       restaurantsList.forEach(el => {
@@ -48,33 +55,27 @@ export class AppComponent implements OnInit {
         this.restaurants.push(restaurant);
       });
 
-      /*
-        convert set to array to display the cuisine list in filters section
-       */
-      this.cuisineSet.forEach((value: string, key: string) => {
-        this.cuisineList.push({ 'name': value, 'checked': false });
-      });
-      this.spinner.hide();
+      if (this.cuisineList.length === 0) {
+        /*
+          convert set to array to display the cuisine list in filters section
+        */
+        this.cuisineSet.forEach((value: string, key: string) => {
+          this.cuisineList.push({ 'name': value, 'checked': false });
+        });
+      }
     }, error => {
       console.log(error);
-      this.spinner.hide();
       this.dataFetched = true;
     });
   }
 
-
-  getRestaurantsByNameAndCuisines() {
-    // tslint:disable-next-line: max-line-length
-    this.restaurantService.getRestaurantsByNameAndCuisines(this.restaurantName, this.getSelectedCuisines(), this.page, this.itemsPerPage, this.sortProperty).subscribe(data => {
-      const restaurantsList = data.content;
-      console.log(data);
-      this.totalPages = data.totalPages;
-      this.restaurants = [];
-      restaurantsList.forEach(el => {
-        const restaurant: Restaurant = this.setRestaurant(el);
-        this.restaurants.push(restaurant);
-      });
-    });
+  storeSearchedName() {
+    this.nameBeforePressingBack = this.restaurantName;
+  }
+  searchRestaurants(event) {
+    if (event.keyCode === 13 || (this.nameBeforePressingBack.length > 0 && this.restaurantName.length === 0 && event.keyCode === 8)) {
+      this.getRestaurants();
+    }
   }
 
   private setRestaurant(el): Restaurant {
@@ -100,16 +101,7 @@ export class AppComponent implements OnInit {
 
   /* returns the selected(filtered) cuisines from the list of cuisines */
   private getSelectedCuisines(): any[] {
-    return this.cuisineList.filter((item) => item.checked);
-  }
-
-  /* Clear all filters */
-  public clearFilters(): void {
-    // clear filter on cuisine
-    this.cuisineList.forEach((item) => {
-      item.checked = false;
-    });
-    this.getRestaurants();
+    return this.cuisineList.filter((item) => item.checked) || [];
   }
 
   public showFilters(): void {
@@ -118,7 +110,7 @@ export class AppComponent implements OnInit {
 
   public applyFilters(): void {
     this.hideFilters();
-    this.getRestaurantsByNameAndCuisines();
+    this.getRestaurants();
   }
 
   public hideFilters(): void {
@@ -128,28 +120,24 @@ export class AppComponent implements OnInit {
   next() {
     if (this.page < this.totalPages - 1) {
       this.page++;
-      this.fetchRestaurants();
+      this.getRestaurants();
     }
   }
 
   prev() {
     if (this.page > 0) {
       this.page--;
-      this.fetchRestaurants();
-    }
-  }
-
-  fetchRestaurants() {
-    if (this.restaurantName !== '' || this.getSelectedCuisines().length > 0) {
-      this.getRestaurantsByNameAndCuisines();
-    } else {
       this.getRestaurants();
     }
   }
 
-  applyFilter() {
-    if (this.restaurantName) {
-      this.getRestaurantsByNameAndCuisines();
-    }
+  /* Clear all filters */
+  public clearFilters(): void {
+    this.cuisineList.forEach((item) => {
+      item.checked = false;
+    });
+    this.restaurantName = '';
+    this.sortProperty = '';
+    this.getRestaurants();
   }
 }
