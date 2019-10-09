@@ -39,7 +39,8 @@ export class AppComponent implements OnInit {
     this.filters.name = this.restaurantName;
     this.filters.cuisinesList = this.getSelectedCuisines();
   }
-  private getRestaurants(): void {
+
+  getRestaurants(): void {
     this.dataFetched = false;
     /*
       Fetching restaurant data (csv file) from the restaurantService class
