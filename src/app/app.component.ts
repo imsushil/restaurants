@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RestaurantService } from './service/restaurant.service'
 import { Restaurant } from './modal/Restaurant';
-import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-root',

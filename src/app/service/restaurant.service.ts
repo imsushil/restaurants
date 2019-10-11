@@ -37,6 +37,7 @@ export class RestaurantService {
         if (c) { url += '&'; }
         url += 'cuisines=' + cuisines;
       }
+      c++;
     }
     if (c) { url += '&'; }
     url = url + 'page=' + page + '&size=' + size + '&sort=' + sort;
