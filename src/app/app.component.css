@@ -1,6 +1,13 @@
 html, body {
     height: 100%;
 }
+.filter-section {
+  position: fixed;
+  z-index: 500;
+}
+.content {
+  margin-top: 55px;
+}
 .no-results {
   display: flex;
   justify-content: center;

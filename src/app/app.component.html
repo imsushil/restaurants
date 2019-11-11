@@ -1,4 +1,4 @@
-<header></header>
+<header class="fixed-top"></header>
 <div class="container-fluid bg-light">
   <div class="spinner" [hidden]="dataFetched">
     <div class="d-flex justify-content-center align-items-center h-100">
@@ -36,13 +36,14 @@
       <button class="btn btn-primary btn-sm" (click)="applyFilters()">Apply</button>
     </div>
   </div>
-  <div>
+  <div class="content">
     <div class="row">
       <!-- Filter section -->
       <div class="col-12 text-right d-xs-block d-md-none mt-2">
         <button class="btn btn-primary btn-sm rounded-circle" (click)="showFilters()"><i class="fa fa-filter"></i></button>
       </div>
-      <div class="d-none d-md-block col-md-3 h-100 shadow-sm m-2 bg-white">
+      <div class="d-none d-md-block col-md-3 h-100 p-0 filter-section">
+        <div class="shadow-sm bg-white px-2 m-2">
         <div class="row">
           <div class="col">
               <h5>Filters</h5>
@@ -63,9 +64,11 @@
           </div>
         </div>
       </div>
+      </div>
 
     <!-- Main -->
-      <div class="col shadow-sm m-2 bg-white">
+      <div class="col-md-9 offset-md-3 p-0">
+        <div class="shadow-sm bg-white px-2 m-2">
         <form>
           <div class="form-row">
             <div class="form-group col-6 col-sm-6 col-md-6">
@@ -123,6 +126,7 @@
           <button class="btn btn-sm button-primary" (click)="next()" [ngClass]="{'disabled': page==totalPages-1}">Next</button>
         </div>
       </div>
+    </div>
     </div>
     </div>
   </div>
