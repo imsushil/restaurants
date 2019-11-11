@@ -8,6 +8,12 @@ html, body {
 .content {
   margin-top: 55px;
 }
+.search-section {
+  position: sticky;
+  top: 50px;
+  z-index: 500;
+  background-color: #fff;
+}
 .no-results {
   display: flex;
   justify-content: center;
