@@ -42,8 +42,8 @@
       <div class="col-12 text-right d-xs-block d-md-none mt-2">
         <button class="btn btn-primary btn-sm rounded-circle" (click)="showFilters()"><i class="fa fa-filter"></i></button>
       </div>
-      <div class="d-none d-md-block col-md-3 h-100 p-0 filter-section">
-        <div class="shadow-sm bg-white px-2 m-2">
+      <div class="d-none d-md-block col-md-3 h-100 filter-section">
+        <div class="shadow-sm bg-white p-3 my-2">
         <div class="row">
           <div class="col">
               <h5>Filters</h5>
@@ -67,8 +67,8 @@
       </div>
 
     <!-- Main -->
-      <div class="col-md-9 offset-md-3 p-0">
-        <div class="shadow-sm bg-white px-2 m-2">
+      <div class="col-md-9 offset-md-3">
+        <div class="shadow-sm bg-white p-3 my-2">
         <form class="search-section">
           <div class="form-row">
             <div class="form-group col-6 col-sm-6 col-md-6">
@@ -118,12 +118,14 @@
         </div>
       </div>
       <div class="row justify-content-center align-items-center pagination" *ngIf="restaurants.length>0">
-        <div class="item">
-          <button class="btn btn-sm button-primary" (click)="prev()" [ngClass]="{'disabled': page==0}">Prev</button>
-        </div>
-        <div class="item">{{page+1}}/{{totalPages}}</div>
-        <div class="item">
-          <button class="btn btn-sm button-primary" (click)="next()" [ngClass]="{'disabled': page==totalPages-1}">Next</button>
+        <div class="col-xs">
+          <div class="item">
+            <button class="btn btn-sm button-primary" (click)="prev()" [ngClass]="{'disabled': page==0}">Prev</button>
+          </div>
+          <div class="item">{{page+1}}/{{totalPages}}</div>
+          <div class="item">
+            <button class="btn btn-sm button-primary" (click)="next()" [ngClass]="{'disabled': page==totalPages-1}">Next</button>
+          </div>
         </div>
       </div>
     </div>

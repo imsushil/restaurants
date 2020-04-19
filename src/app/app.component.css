@@ -68,17 +68,16 @@ select:focus,
 }
 
 .pagination {
-    padding: 0;
+    padding: 0rem;
     font-size: 0.8rem;
-    margin-bottom: 1rem;
+}
+.pagination .item {
+  display: inline-block;
 }
 .pagination .item:first-child {
   padding-right: 5px;
 }
 .pagination .item button {
-  /* background-color: #fafafa;
-  border-color: #ccc; */
-  /* background-color: #d84f57; */
   background-color: #fafafa;
   color: #d84f57;
   border-color: #d84f57;
